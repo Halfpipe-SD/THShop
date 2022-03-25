@@ -31,8 +31,7 @@ app.use((err: any, req: any, res: any, next: any) => {
   if (err)
     res.status(400).json({
       status: "error",
-      message: "Invalid request!",
-      error: err.toString(),
+      message: err.toString(),
     });
 });
 

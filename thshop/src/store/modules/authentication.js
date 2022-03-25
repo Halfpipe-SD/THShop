@@ -18,10 +18,10 @@ export default {
     },
   },
   actions: {
-    async login({ commit }) {
-      const loginRes = await axios.get("/auth/login");
-
+    async login({ commit }, payload) {
+      const loginRes = await axios.post("/auth/login", payload);
       console.log(loginRes.data);
+
       const apps = [
         {
           title: "Home",
@@ -49,6 +49,11 @@ export default {
     },
     setApps({ commit }, apps) {
       commit("SET_APPS", apps);
+    },
+    async registration({ commit }, payload) {
+      const registrationRes = await axios.post("/auth/registration", payload);
+      commit();
+      console.log(registrationRes.data);
     },
   },
   getters: {

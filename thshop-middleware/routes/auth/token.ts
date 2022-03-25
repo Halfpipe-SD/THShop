@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
       });
     } else throw new Error("Invalid authorization header");
   } catch (error) {
-    res.status(401).json({ status: "error", error: error.toString() });
+    res.status(401).json({ status: "error", message: error.toString() });
   }
 });
 

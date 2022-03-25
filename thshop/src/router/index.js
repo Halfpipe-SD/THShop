@@ -63,4 +63,9 @@ router.beforeEach(async (to, from, next) => {
   next();
 });
 
+router.afterEach((to) => {
+  // set the page title
+  document.title = String(to.meta.title || "Website") + " - TH-Shop";
+});
+
 export default router;

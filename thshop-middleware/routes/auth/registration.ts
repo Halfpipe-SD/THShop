@@ -2,16 +2,6 @@ import express from "express";
 const router = express.Router();
 
 import crypto from "crypto-js";
-import moment from "moment";
-
-// import axios from "axios";
-// import jwt from "jsonwebtoken";
-
-// // sign userdata token
-// const token = jwt.sign({ login: user.data.login }, process.env.JWT_SECRET, {
-//   expiresIn: tokenExpire,
-// });
-// const tokenExpire: string = process.env.TOKEN_EXPIRE;
 
 import { executeQuery } from "../../scripts/database";
 import { generateSalt } from "../../scripts/authentication";

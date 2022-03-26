@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build . --file thshop-middleware/Dockerfile --tag thshopapi:$(date +%s)
+        run: docker build thshop-middleware --file thshop-middleware/Dockerfile --tag thshopapi:$(date +%s)

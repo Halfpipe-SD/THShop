@@ -5,7 +5,7 @@
         <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
 
         <v-btn
-          v-for="(app, i) in apps"
+          v-for="(app, i) in $store.getters.getApps"
           :key="i"
           :to="{ name: app.name }"
           depressed
@@ -75,25 +75,10 @@
 export default {
   data() {
     return {
-      apps: [],
+      // apps: [],
     };
   },
-  watch: {
-    "$store.getters.isAuthenticated": function (newVal) {
-      if (newVal) this.apps = this.$store.getters.getApps;
-      else this.fetchPublicApps();
-    },
-  },
-  created() {
-    this.fetchPublicApps();
-  },
   methods: {
-    fetchPublicApps() {
-      this.$axios.get("/public/apps").then((response) => {
-        this.apps = response.data.apps;
-        this.$store.dispatch("setApps", response.data.apps);
-      });
-    },
     logout() {
       this.$store.dispatch("logout");
       this.$router.push({ name: "start" });

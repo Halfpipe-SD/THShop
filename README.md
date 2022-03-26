@@ -1,6 +1,6 @@
 # THShop
 
-TH-Shop with MariaDB
+TH-Shop with JWT Authentication and MariaDB
 
 ## How To Run
 

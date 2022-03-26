@@ -54,6 +54,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // do autologin
+  const jwtToken = localStorage.getItem("jwt.token");
+
+  if (!store.getters.isAuthenticated && jwtToken)
+    store.dispatch("autologin", jwtToken);
+
+  // set apps
+  await store.dispatch("setApps");
+
   // if meta.requiresAuth is true, check if the user is authenticated
   // only next() if the user is authenticated, otherwise redirect to start
   if (to.matched.some((record) => record.meta.requiresAuth)) {

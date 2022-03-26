@@ -20,7 +20,7 @@ app.use(
   cors({
     methods: ["GET", "POST"],
     origin: (orig, callback) => {
-      if (orig == origin) callback(null, true);
+      if (orig === origin) callback(null, true);
       else callback(new Error("Not allowed by CORS"));
     },
   })
@@ -40,7 +40,7 @@ app.use((err: any, req: any, res: any, next: any) => {
 
 app.get("/", (req: any, res: any) => {
   res.status(200).json({
-    success: true,
+    status: "success",
     message: "API Online!",
     authorization: req.headers.authorization,
   });

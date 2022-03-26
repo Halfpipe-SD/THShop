@@ -19,7 +19,10 @@ app.use(helmet());
 app.use(
   cors({
     methods: ["GET", "POST"],
-    origin,
+    origin: (orig, callback) => {
+      if (orig == origin) callback(null, true);
+      else callback(new Error("Not allowed by CORS"));
+    },
   })
 );
 

@@ -11,8 +11,7 @@
     "dev": "cross-env NODE_ENV=development nodemon -e ts,json --exec npm run dev:start",
     "dev:start": "npm-run-all clean lint tsc start",
     "prod": "cross-env NODE_ENV=production npm run prod:start",
-    "prod:start": "npm-run-all clean lint tsc pm2",
-    "pm2": "pm2 start dist/index.js --watch"
+    "prod:start": "npm-run-all clean lint tsc start"
   },
   "keywords": [],
   "author": "",
@@ -27,8 +26,7 @@
     "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^3.0.0",
-    "moment": "^2.29.1",
-    "pm2": "^5.2.0"
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

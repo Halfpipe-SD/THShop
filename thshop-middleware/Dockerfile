@@ -6,7 +6,7 @@ COPY thshop-middleware/package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY thshop-middleware .
 
 ENV PORT=3000
 

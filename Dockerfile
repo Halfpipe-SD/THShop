@@ -4,11 +4,13 @@ FROM node:16
 
 WORKDIR /app
 
-COPY thshop-middleware/package*.json ./
+RUN cd thshop-middleware
+
+COPY package*.json ./
 
 RUN npm install
 
-COPY thshop-middleware .
+COPY . .
 
 ENV PORT=3000
 

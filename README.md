@@ -15,7 +15,7 @@ A push on the main branch deploys the frontend to github-pages and deploys a doc
 > Example .env.development
 ```env
 SERVER_PORT=3333
-CORS_ORIGIN="http://localhost:8080"
+CORS_ORIGIN=http://localhost:8080
 TOKEN_EXPIRE=1d
 JWT_SECRET=
 DB_HOST=

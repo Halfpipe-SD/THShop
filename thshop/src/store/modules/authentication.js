@@ -1,14 +1,24 @@
 import axios from "@/plugins/axios";
+import router from "@/router/index";
 
 export default {
   state: {
     isAuthenticated: false,
+    jwt: null,
     user: null,
     apps: [],
   },
   mutations: {
     SET_AUTHENTICATED(state, isAuthenticated) {
       state.isAuthenticated = isAuthenticated;
+    },
+    SET_JWT(state, jwt) {
+      localStorage.setItem("jwt.token", jwt);
+      state.jwt = jwt;
+    },
+    REMOVE_JWT(state) {
+      localStorage.removeItem("jwt.token");
+      state.jwt = null;
     },
     SET_USER(state, user) {
       state.user = user;
@@ -18,42 +28,33 @@ export default {
     },
   },
   actions: {
+    autologin({ commit }, jwtToken) {
+      commit("SET_AUTHENTICATED", true);
+      commit("SET_JWT", jwtToken);
+    },
     async login({ commit }, payload) {
       const loginRes = await axios.post("/auth/login", payload);
-      console.log(loginRes.data);
-
-      const apps = [
-        {
-          title: "Home",
-          name: "home",
-          icon: "mdi-home",
-        },
-        {
-          title: "Profile",
-          name: "profile",
-          icon: "mdi-account",
-        },
-        {
-          title: "About",
-          name: "about",
-          icon: "mdi-information",
-        },
-      ];
-      commit("SET_APPS", apps);
       commit("SET_AUTHENTICATED", true);
+      commit("SET_JWT", loginRes.data.token);
+      return loginRes.data;
     },
     logout({ commit }) {
       commit("SET_AUTHENTICATED", false);
       commit("SET_USER", null);
-      commit("SET_APPS", []);
+      commit("REMOVE_JWT");
+      router.push({ name: "start" });
     },
-    setApps({ commit }, apps) {
-      commit("SET_APPS", apps);
+    async setApps({ commit, getters }) {
+      // fetch public apps if not authenticated
+      let apps = [];
+      if (getters.isAuthenticated) apps = await axios.get("/user/apps");
+      else apps = await axios.get("/public/apps");
+      // commit new apps to mutations
+      commit("SET_APPS", apps.data.apps);
     },
-    async registration({ commit }, payload) {
+    async registration(_, payload) {
       const registrationRes = await axios.post("/auth/registration", payload);
-      commit();
-      console.log(registrationRes.data);
+      return registrationRes.data;
     },
   },
   getters: {

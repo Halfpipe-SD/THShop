@@ -46,11 +46,12 @@ app.get("/", (req: any, res: any) => {
 // import routes
 import authRouter from "./routes/auth";
 import publicRouter from "./routes/public";
+import userRouter from "./routes/user";
 app.use("/auth", authRouter);
 app.use("/public", publicRouter);
+app.use("/user", userRouter);
 
 // Create server object
 const server = app.listen(port, () => {
   console.log("Running in " + process.env.NODE_ENV + " mode on port " + port);
-
 });

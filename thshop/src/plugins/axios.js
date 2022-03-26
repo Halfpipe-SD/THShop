@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "@/store/index";
 
 const api = axios.create({
   baseURL: String(process.env.VUE_APP_BASE_URL),
@@ -18,6 +19,9 @@ api.interceptors.response.use(
     return success;
   },
   (failure) => {
+    // logout if token is invalid
+    if (failure.response.status === 401) store.dispatch("logout");
+
     return Promise.reject(failure);
   }
 );

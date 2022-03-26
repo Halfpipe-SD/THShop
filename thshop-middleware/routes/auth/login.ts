@@ -56,7 +56,6 @@ router.post("/", async (req: any, res: any) => {
       token,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ status: "error", message: error.toString() });
   }
 });

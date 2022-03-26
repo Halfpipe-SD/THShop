@@ -15,8 +15,8 @@ jobs:
       - name: Install and Build 🔧
         run: |
           cd thshop
-          npm run lint
           npm ci
+          npm run lint
           npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2

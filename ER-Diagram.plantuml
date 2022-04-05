@@ -1,0 +1,198 @@
+' VSCode Extensions required: "jebbs.plantuml" and "Mebrahtom.plantumlpreviewer"
+
+@startuml THShop
+
+title THShop Tables
+
+left to right direction
+
+' hide the spot, methods and stereotypes
+hide circle
+hide methods
+hide stereotypes
+
+' avoid problems with angled crows feet
+' skinparam linetype ortho
+
+' !define Table(name,desc) class name as "desc"
+' !define pk(x) <font color="red">PK </font><b>x</b>
+' !define fk(x) <font color="orange">FK </font><b>x</b>
+!define FK <font color="orange">FK </font>
+!define PK <font color="red">PK </font>
+' file types
+!define VARCHAR(x) <color:green>VARCHAR[x]</color>
+!define INT <color:blue>INT</color>
+!define BIT <color:SkyBlue>BIT</color>
+!define DOUBLE <color:LightBlue>DOUBLE</color>
+!define TIMESTAMP <color:brown>TIMESTAMP</color>
+
+' Entities
+
+map roles {
+  roleID => PK INT
+  name => VARCHAR(30)
+  description => VARCHAR(30)
+}
+
+map users {
+  userID => PK INT
+  email => VARCHAR(30)
+  password => VARCHAR(30)
+  salt => VARCHAR(30)
+  firstname => VARCHAR(30)
+  lastname => VARCHAR(30)
+  country => VARCHAR(30)
+  city => VARCHAR(30)
+  zipcode => VARCHAR(30)
+  street => VARCHAR(30)
+  phone => VARCHAR(30)
+  birthday => TIMESTAMP
+  created => TIMESTAMP
+  lastLogin => TIMESTAMP
+  roleID => FK INT
+}
+
+map carts {
+  userID => PK FK INT
+  itemID => PK FK INT
+  quantity => INT
+}
+
+map views {
+  userID => PK FK INT
+  itemID => PK FK INT
+  count => INT
+}
+
+map items {
+  itemID => PK INT
+  dealerID => FK INT
+  name => VARCHAR(30)
+  description => VARCHAR(50)
+  price => DOUBLE
+  inStock => BIT
+  manufacturer => VARCHAR(30)
+  dateAdded => TIMESTAMP
+}
+
+map dealers {
+  dealerID => PK INT
+  name => VARCHAR(30)
+}
+
+map userOrders {
+  userID => PK FK INT
+  orderID => PK FK INT
+  created => TIMESTAMP
+}
+
+map orders {
+  orderID => PK INT
+  status => VARCHAR(10)
+  paymentMethod => VARCHAR(10)
+}
+
+map orderItems {
+  orderID => PK FK INT
+  itemID => PK FK INT
+  quantity => INT
+}
+
+' Associations 
+
+users::roleID "n" --- "1" roles::roleID
+
+users::userID "1" -- "n" carts::userID
+carts::itemID "n" -- "1" items::itemID
+
+users::userID "1" -- "n" views::userID
+views::itemID "n" -- "1" items::itemID
+
+items::dealerID "n" -- "1" dealers::dealerID
+
+users::userID "1" -- "n" userOrders::userID
+userOrders::orderID "n" -- "1" orders::orderID
+
+orderItems::orderID "n" -- "1" orders::orderID
+orderItems::itemID "n" -- "1" items::itemID
+
+
+
+@enduml
+
+
+
+' entity "Roles" as roles {
+'   roleID: number <<generated>>
+'   --
+'   description: text
+'   priority: number
+'   permissoins: text
+' }
+
+' entity "Users" as users {
+'   userID: number <<generated>>
+'   --
+'   email: text
+'   password: text
+'   salt: text
+'   firstname: text
+'   lastname: text
+'   country: text
+'   city: text
+'   zipcode: text
+'   street: text
+'   phone: text
+'   birthday: Date
+'   created: Date
+'   lastLogin: Date
+'   *cardID: number <<FK>>
+'   *roleID: number <<FK>>
+' }
+
+
+
+' entity "Items" as items {
+'   itemsID: number <<generated>>
+'   --
+'   price: number
+'   "title": text
+'   description: text
+'   tags: text
+'   image: text ?
+'   stock: number
+'   manufacturer: text
+'   dateAdded: timestamp
+'   *dealerID: number <<FK>>
+' }
+
+
+
+
+' entity "Dealers" as dealers {
+'   dealerID: number <<generated>>
+'   --
+'   name: text
+' }
+
+
+
+' entity "Orders" as orders {
+'   orderID: number <<generated>>
+'   --
+'   status: text
+'   orderDate: timestamp
+'   orderComplete: timestamp
+  
+'   *userID: number <<FK>>
+'   *itemsID: number <<FK>>
+' }
+
+
+' users }o..o{ items
+' users }o..o{ items
+' users ||..o{ orders
+' users }o..o{ roles
+
+' items }o..o{ dealers
+' items }o..o{ orders

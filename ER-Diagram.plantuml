@@ -4,21 +4,13 @@
 
 title THShop Tables
 
+' set flow direction from left to right
 left to right direction
 
-' hide the spot, methods and stereotypes
-hide circle
-hide methods
-hide stereotypes
+' keywords
+!define PK <color:red>PK</color>
+!define FK <color:orange>FK</color>
 
-' avoid problems with angled crows feet
-' skinparam linetype ortho
-
-' !define Table(name,desc) class name as "desc"
-' !define pk(x) <font color="red">PK </font><b>x</b>
-' !define fk(x) <font color="orange">FK </font><b>x</b>
-!define FK <font color="orange">FK </font>
-!define PK <font color="red">PK </font>
 ' file types
 !define VARCHAR(x) <color:green>VARCHAR[x]</color>
 !define INT <color:blue>INT</color>
@@ -116,83 +108,4 @@ userOrders::orderID "n" -- "1" orders::orderID
 orderItems::orderID "n" -- "1" orders::orderID
 orderItems::itemID "n" -- "1" items::itemID
 
-
-
 @enduml
-
-
-
-' entity "Roles" as roles {
-'   roleID: number <<generated>>
-'   --
-'   description: text
-'   priority: number
-'   permissoins: text
-' }
-
-' entity "Users" as users {
-'   userID: number <<generated>>
-'   --
-'   email: text
-'   password: text
-'   salt: text
-'   firstname: text
-'   lastname: text
-'   country: text
-'   city: text
-'   zipcode: text
-'   street: text
-'   phone: text
-'   birthday: Date
-'   created: Date
-'   lastLogin: Date
-'   *cardID: number <<FK>>
-'   *roleID: number <<FK>>
-' }
-
-
-
-' entity "Items" as items {
-'   itemsID: number <<generated>>
-'   --
-'   price: number
-'   "title": text
-'   description: text
-'   tags: text
-'   image: text ?
-'   stock: number
-'   manufacturer: text
-'   dateAdded: timestamp
-'   *dealerID: number <<FK>>
-' }
-
-
-
-
-' entity "Dealers" as dealers {
-'   dealerID: number <<generated>>
-'   --
-'   name: text
-' }
-
-
-
-' entity "Orders" as orders {
-'   orderID: number <<generated>>
-'   --
-'   status: text
-'   orderDate: timestamp
-'   orderComplete: timestamp
-  
-'   *userID: number <<FK>>
-'   *itemsID: number <<FK>>
-' }
-
-
-' users }o..o{ items
-' users }o..o{ items
-' users ||..o{ orders
-' users }o..o{ roles
-
-' items }o..o{ dealers
-' items }o..o{ orders

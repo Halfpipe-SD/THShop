@@ -20,12 +20,6 @@ left to right direction
 
 ' Entities
 
-map roles {
-  roleID => PK INT
-  name => VARCHAR(30)
-  description => VARCHAR(30)
-}
-
 map users {
   userID => PK INT
   email => VARCHAR(30)
@@ -40,14 +34,6 @@ map users {
   phone => VARCHAR(30)
   birthday => TIMESTAMP
   created => TIMESTAMP
-  lastLogin => TIMESTAMP
-  roleID => FK INT
-}
-
-map carts {
-  userID => PK FK INT
-  itemID => PK FK INT
-  quantity => INT
 }
 
 map views {
@@ -55,6 +41,12 @@ map views {
   itemID => PK FK INT
   count => INT
   date => TIMESTAMP
+}
+
+map carts {
+  userID => PK FK INT
+  itemID => PK FK INT
+  quantity => INT
 }
 
 map items {
@@ -75,10 +67,10 @@ map dealers {
 
 map orders {
   orderID => PK INT
+  userID => FK INT
   status => VARCHAR(10)
   paymentMethod => VARCHAR(10)
   created => TIMESTAMP
-  userID => FK INT
 }
 
 map orderItems {
@@ -87,19 +79,46 @@ map orderItems {
   quantity => INT
 }
 
+map roles {
+  userID => PK INT
+  permissionID => PK INT
+  isDefault => BIT
+}
+
+map permissions {
+  permissionID => PK INT
+  name => VARCHAR(30)
+  description => VARCHAR(30)
+}
+
+map tokens {
+  tokenID => PK INT
+  userID => FK INT
+  jwt => VARCHAR(30)
+  refreshToken => VARCHAR(30)
+  validDurationInHours => INT 
+  validUntil => TIMESTAMP
+  created => TIMESTAMP
+  lastLogin => TIMESTAMP
+}
+
+
 ' Associations 
 
-users::roleID "n" -- "1" roles::roleID
+users::userID "1" -- "n" roles::userID
+roles::permissionID "n" -- "1" permissions::permissionID
+
+users::userID "1" -- "n" tokens::userID
 
 users::userID "1" -- "n" carts::userID
-carts::itemID "n" -- "1" items::itemID
+carts::itemID "n" --- "1" items::itemID
 
 users::userID "1" -- "n" views::userID
 views::itemID "n" -- "1" items::itemID
 
-
-items::dealerID "n" -- "1" dealers::dealerID
+' items::dealerID "n" -- "1" dealers::dealerID
 users::userID "1" -- "n" orders::userID
+dealers::dealerID "1" -- "n" items::dealerID
 
 orders::orderID "1" -- "n" orderItems::orderID
 orderItems::itemID "n" -- "1" items::itemID

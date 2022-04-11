@@ -54,6 +54,7 @@ map views {
   userID => PK FK INT
   itemID => PK FK INT
   count => INT
+  date => TIMESTAMP
 }
 
 map items {
@@ -72,16 +73,12 @@ map dealers {
   name => VARCHAR(30)
 }
 
-map userOrders {
-  userID => PK FK INT
-  orderID => PK FK INT
-  created => TIMESTAMP
-}
-
 map orders {
   orderID => PK INT
   status => VARCHAR(10)
   paymentMethod => VARCHAR(10)
+  created => TIMESTAMP
+  userID => FK INT
 }
 
 map orderItems {
@@ -92,7 +89,7 @@ map orderItems {
 
 ' Associations 
 
-users::roleID "n" --- "1" roles::roleID
+users::roleID "n" -- "1" roles::roleID
 
 users::userID "1" -- "n" carts::userID
 carts::itemID "n" -- "1" items::itemID
@@ -100,12 +97,12 @@ carts::itemID "n" -- "1" items::itemID
 users::userID "1" -- "n" views::userID
 views::itemID "n" -- "1" items::itemID
 
+
 items::dealerID "n" -- "1" dealers::dealerID
+users::userID "1" -- "n" orders::userID
 
-users::userID "1" -- "n" userOrders::userID
-userOrders::orderID "n" -- "1" orders::orderID
-
-orderItems::orderID "n" -- "1" orders::orderID
+orders::orderID "1" -- "n" orderItems::orderID
 orderItems::itemID "n" -- "1" items::itemID
+
 
 @enduml

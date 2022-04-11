@@ -17,6 +17,7 @@ left to right direction
 !define BIT <color:SkyBlue>BIT</color>
 !define DOUBLE <color:LightBlue>DOUBLE</color>
 !define TIMESTAMP <color:brown>TIMESTAMP</color>
+!define DATETIME <color:DarkGray>DATETIME</color>
 
 ' Entities
 
@@ -27,27 +28,13 @@ map users {
   salt => VARCHAR(30)
   firstname => VARCHAR(30)
   lastname => VARCHAR(30)
-  country => VARCHAR(30)
-  city => VARCHAR(30)
-  zipcode => VARCHAR(30)
-  street => VARCHAR(30)
   phone => VARCHAR(30)
-  birthday => TIMESTAMP
+  phoneAlt => VARCHAR(30)
+  birthday => DATETIME
   created => TIMESTAMP
+  lastLogin => TIMESTAMP
 }
 
-map views {
-  userID => PK FK INT
-  itemID => PK FK INT
-  count => INT
-  date => TIMESTAMP
-}
-
-map carts {
-  userID => PK FK INT
-  itemID => PK FK INT
-  quantity => INT
-}
 
 map items {
   itemID => PK INT
@@ -60,28 +47,9 @@ map items {
   dateAdded => TIMESTAMP
 }
 
-map dealers {
-  dealerID => PK INT
-  name => VARCHAR(30)
-}
-
-map orders {
-  orderID => PK INT
-  userID => FK INT
-  status => VARCHAR(10)
-  paymentMethod => VARCHAR(10)
-  created => TIMESTAMP
-}
-
-map orderItems {
-  orderID => PK FK INT
-  itemID => PK FK INT
-  quantity => INT
-}
-
 map roles {
-  userID => PK INT
-  permissionID => PK INT
+  userID => PK FK INT
+  permissionID => PK FK INT
   isDefault => BIT
 }
 
@@ -91,37 +59,88 @@ map permissions {
   description => VARCHAR(30)
 }
 
-map tokens {
-  tokenID => PK INT
+map views {
+  userID => PK FK INT
+  itemID => PK FK INT
+  count => INT
+  date => TIMESTAMP
+}
+
+
+map orders {
+  orderID => PK INT
   userID => FK INT
-  jwt => VARCHAR(30)
-  refreshToken => VARCHAR(30)
-  validDurationInHours => INT 
-  validUntil => TIMESTAMP
+  status => VARCHAR(10)
+  paymentMethod => VARCHAR(10)
   created => TIMESTAMP
-  lastLogin => TIMESTAMP
+}
+
+map itemDetails {
+  itemDetailsID => PK INT
+  itemID => FK INT
+  orderID => FK INT
+  quantity => INT
+  color => VARCHAR(10)
+  size => VARCHAR(10)
+}
+
+
+
+
+map carts {
+  userID => PK FK INT
+  itemDetailsID => PK FK INT
+}
+
+
+
+
+map addressType {
+  userID => PK FK INT
+  addressID => PK FK INT
+  isBillingAddress => BIT
+  isDeliveryAddress => BIT
+}
+
+map addresses {
+  addressID => PK INT
+  country => VARCHAR(2)
+  city => VARCHAR(30)
+  zipcode => VARCHAR(8)
+  street => VARCHAR(30)
+}
+
+map dealers {
+  dealerID => PK INT
+  addressID => FK INT
+  name => VARCHAR(30)
 }
 
 
 ' Associations 
 
+users::userID "1" -- "n" addressType::userID
+addressType::addressID "n" -- "1" addresses::addressID
+
+addressType::userID -- users::userID
+addresses::addressID -- addressType::addressID
+
 users::userID "1" -- "n" roles::userID
 roles::permissionID "n" -- "1" permissions::permissionID
 
-users::userID "1" -- "n" tokens::userID
-
-users::userID "1" -- "n" carts::userID
-carts::itemID "n" --- "1" items::itemID
+orders::orderID "1" -- "n" itemDetails::orderID
 
 users::userID "1" -- "n" views::userID
 views::itemID "n" -- "1" items::itemID
 
-' items::dealerID "n" -- "1" dealers::dealerID
+
 users::userID "1" -- "n" orders::userID
 dealers::dealerID "1" -- "n" items::dealerID
+addresses::addressID "1" -- "1" dealers::addressID
 
-orders::orderID "1" -- "n" orderItems::orderID
-orderItems::itemID "n" -- "1" items::itemID
+carts::itemDetailsID "n" -- "1" itemDetails::itemDetailsID
+itemDetails::itemID "1" -- "1" items::itemID
 
+users::userID "1" --- "n" carts::userID
 
 @enduml

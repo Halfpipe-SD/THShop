@@ -35,7 +35,6 @@ map users {
   lastLogin => TIMESTAMP
 }
 
-
 map items {
   itemID => PK INT
   dealerID => FK INT
@@ -66,7 +65,6 @@ map views {
   date => TIMESTAMP
 }
 
-
 map orders {
   orderID => PK INT
   userID => FK INT
@@ -84,18 +82,12 @@ map itemDetails {
   size => VARCHAR(10)
 }
 
-
-
-
 map carts {
   userID => PK FK INT
   itemDetailsID => PK FK INT
 }
 
-
-
-
-map addressType {
+map addressTypes {
   userID => PK FK INT
   addressID => PK FK INT
   isBillingAddress => BIT
@@ -119,11 +111,11 @@ map dealers {
 
 ' Associations 
 
-users::userID "1" -- "n" addressType::userID
-addressType::addressID "n" -- "1" addresses::addressID
+users::userID "1" -- "n" addressTypes::userID
+addressTypes::addressID "n" -- "1" addresses::addressID
 
-addressType::userID -- users::userID
-addresses::addressID -- addressType::addressID
+addressTypes::userID -- users::userID
+addresses::addressID -- addressTypes::addressID
 
 users::userID "1" -- "n" roles::userID
 roles::permissionID "n" -- "1" permissions::permissionID
@@ -132,7 +124,6 @@ orders::orderID "1" -- "n" itemDetails::orderID
 
 users::userID "1" -- "n" views::userID
 views::itemID "n" -- "1" items::itemID
-
 
 users::userID "1" -- "n" orders::userID
 dealers::dealerID "1" -- "n" items::dealerID

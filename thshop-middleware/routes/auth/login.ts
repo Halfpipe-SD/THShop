@@ -14,7 +14,8 @@ router.post("/", async (req: any, res: any) => {
       throw new Error("Missing password or username");
 
     let data = await executeQuery(
-      "select username, passwordsalt from thshop.users where username = ?;",
+      process.env.DB_NAME,
+      "select username, passwordsalt from users where username = ?;",
       req.body.username
     );
 
@@ -29,7 +30,8 @@ router.post("/", async (req: any, res: any) => {
 
     // check if user is valid
     data = await executeQuery(
-      "select active, username, passwordhash from thshop.users where username = ? and passwordhash = ?;",
+      process.env.DB_NAME,
+      "select active, username, passwordhash from users where username = ? and passwordhash = ?;",
       [req.body.username, hash]
     );
 
@@ -39,7 +41,8 @@ router.post("/", async (req: any, res: any) => {
 
     // set users last login date
     await executeQuery(
-      "update thshop.users set lastLogin = now() where username = ?;",
+      process.env.DB_NAME,
+      "update users set lastLogin = now() where username = ?;",
       req.body.username
     );
 

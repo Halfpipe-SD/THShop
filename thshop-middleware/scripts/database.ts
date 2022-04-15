@@ -7,8 +7,13 @@ const pool = mariadb.createPool({
   connectionLimit: 10,
 });
 
-async function executeQuery(sql: string, values?: any): Promise<any> {
+async function executeQuery(
+  databaseName: string,
+  sql: string,
+  values?: any
+): Promise<any> {
   const connection = await pool.getConnection();
+  connection.query("use " + databaseName + ";");
   const data = connection.query(sql, values);
   connection.end();
   return data;

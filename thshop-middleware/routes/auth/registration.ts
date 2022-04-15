@@ -19,7 +19,8 @@ router.post("/", async (req, res) => {
 
     // check if user already exists
     const usernameData = await executeQuery(
-      "select username from thshop.users where username = ?",
+      process.env.DB_NAME,
+      "select username from users where username = ?",
       req.body.username
     );
 
@@ -33,7 +34,8 @@ router.post("/", async (req, res) => {
 
     // create new activated user
     await executeQuery(
-      "insert into thshop.users (active, username, passwordhash, passwordsalt, created) values (?, ?, ?, ?, now())",
+      process.env.DB_NAME,
+      "insert into users (active, username, passwordhash, passwordsalt, created) values (?, ?, ?, ?, now())",
       [1, req.body.username, hash, salt]
     );
 

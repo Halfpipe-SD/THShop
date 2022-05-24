@@ -14,7 +14,7 @@ left to right direction
 ' file types
 !define VARCHAR(x) <color:green>VARCHAR[x]</color>
 !define INT <color:blue>INT</color>
-!define BIT <color:SkyBlue>BIT</color>
+!define TINYINT <color:SkyBlue>TINYINT</color>
 !define DOUBLE <color:LightBlue>DOUBLE</color>
 !define TIMESTAMP <color:brown>TIMESTAMP</color>
 !define DATETIME <color:DarkGray>DATETIME</color>
@@ -23,6 +23,7 @@ left to right direction
 
 map users {
   userID => PK INT
+  active => TINYINT
   email => VARCHAR(30)
   password => VARCHAR(30)
   salt => VARCHAR(30)
@@ -30,6 +31,7 @@ map users {
   lastname => VARCHAR(30)
   phone => VARCHAR(30)
   phoneAlt => VARCHAR(30)
+  gender => VARCHAR(1)
   birthday => DATETIME
   created => TIMESTAMP
   lastLogin => TIMESTAMP
@@ -41,7 +43,7 @@ map items {
   name => VARCHAR(30)
   description => VARCHAR(50)
   price => DOUBLE
-  inStock => BIT
+  inStock => TINYINT
   manufacturer => VARCHAR(30)
   dateAdded => TIMESTAMP
 }
@@ -49,7 +51,7 @@ map items {
 map roles {
   userID => PK FK INT
   permissionID => PK FK INT
-  isDefault => BIT
+  isDefault => TINYINT
 }
 
 map permissions {
@@ -90,8 +92,8 @@ map carts {
 map addressTypes {
   userID => PK FK INT
   addressID => PK FK INT
-  isBillingAddress => BIT
-  isDeliveryAddress => BIT
+  isBillingAddress => TINYINT
+  isDeliveryAddress => TINYINT
 }
 
 map addresses {

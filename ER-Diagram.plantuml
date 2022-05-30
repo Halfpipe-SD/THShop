@@ -43,7 +43,7 @@ map items {
   name => VARCHAR(30)
   description => VARCHAR(50)
   price => DOUBLE
-  inStock => TINYINT
+  stock => INT
   manufacturer => VARCHAR(30)
   dateAdded => TIMESTAMP
 }
@@ -57,7 +57,7 @@ map roles {
 map permissions {
   permissionID => PK INT
   name => VARCHAR(30)
-  description => VARCHAR(30)
+  description => VARCHAR(50)
 }
 
 map views {
@@ -129,7 +129,7 @@ views::itemID "n" -- "1" items::itemID
 
 users::userID "1" -- "n" orders::userID
 dealers::dealerID "1" -- "n" items::dealerID
-addresses::addressID "1" -- "1" dealers::addressID
+addresses::addressID "1" -- "n" dealers::addressID
 
 carts::itemDetailsID "n" -- "1" itemDetails::itemDetailsID
 itemDetails::itemID "1" -- "1" items::itemID

@@ -44,19 +44,18 @@ map items {
   description => VARCHAR(50)
   price => DOUBLE
   stock => INT
+  stockAvailable => INT
   manufacturer => VARCHAR(30)
   dateAdded => TIMESTAMP
 }
 
 map roles {
   userID => PK FK INT
-  permissionID => PK FK INT
-  isDefault => TINYINT
+  name => PK FK VARCHAR(30)
 }
 
 map permissions {
-  permissionID => PK INT
-  name => VARCHAR(30)
+  name => PK VARCHAR(30)
   description => VARCHAR(50)
 }
 
@@ -120,7 +119,7 @@ addressTypes::userID -- users::userID
 addresses::addressID -- addressTypes::addressID
 
 users::userID "1" -- "n" roles::userID
-roles::permissionID "n" -- "1" permissions::permissionID
+roles::name "n" -- "1" permissions::name
 
 orders::orderID "1" -- "n" itemDetails::orderID
 

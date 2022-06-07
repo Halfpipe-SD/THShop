@@ -25,7 +25,8 @@ map users {
   userID => PK INT
   active => TINYINT
   email => VARCHAR(30)
-  password => VARCHAR(30)
+  username => VARCHAR(30)
+  passwordHash => VARCHAR(30)
   salt => VARCHAR(30)
   firstname => VARCHAR(30)
   lastname => VARCHAR(30)

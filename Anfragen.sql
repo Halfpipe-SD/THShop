@@ -90,7 +90,7 @@ commit;
 
 -- Als Mitglied möchte ich einen Artikel in den Warenkorb legen, um ihn zu kaufen
 
--- Als Mitarbeiter möchte ich einen Artikel hinzufügen
+-- Als Mitarbeiter möchte ich einen Artikel hinzufügen  
 insert into items(
     name,
     dealerID,

@@ -6,6 +6,7 @@ select i.name,
   i.manufacturer
 from items i;
 
+-- felix
 -- Als Gast möchte ich nach einem bestimmten Artikel suchen
 SELECT i.name,
   i.description,

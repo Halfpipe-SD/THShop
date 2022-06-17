@@ -125,3 +125,5 @@ values (?, ?);
 -- Als Admin möchte ich eine Berechtigung löschen
 delete from permissions
 where permissions.name = ?;
+
+--Hi =)

@@ -1,4 +1,4 @@
--- Als Gast möchte ich alle Artikel Items angezeigt bekommen 
+-- Als Gast möchte ich alle Artikel angezeigt bekommen.
 SELECT i.name,
   i.description,
   i.price,
@@ -7,7 +7,7 @@ SELECT i.name,
 FROM items i;
 
 -- felix
--- Als Gast möchte ich nach einem bestimmten Artikel suchen
+-- Als Gast möchte ich nach einem bestimmten Artikel suchen.
 SELECT i.name,
   i.description,
   i.price,
@@ -22,17 +22,17 @@ SELECT u.username,
 FROM users u
 WHERE u.username = ?;
 
--- Als Mitglied möchte ich meine Email-Adrese bearbeiten, weil sie aktualisiert hat.
+-- Als Mitglied möchte ich meine Email-Adrese bearbeiten, weil sie sich aktualisiert hat.
 UPDATE users u
 SET u.email = ?
 WHERE u.userid = ?;
 
--- Als Mitglied möchte ich mein usernamen bearbeiten, weil dieser sich geändert hat.
+-- Als Mitglied möchte ich meinen Usernamen bearbeiten, weil dieser sich geändert hat.
 UPDATE users u
 SET u.username = ?
 WHERE u.userid = ?;
 
--- Als Mitglied möchte ich mein passwort ändern, um die Sicherheit zu gewährleisten.
+-- Als Mitglied möchte ich mein Passwort ändern, um die Sicherheit zu gewährleisten.
 UPDATE users u
 SET u.passwordHash = ?
 WHERE u.userid = ?;
@@ -43,7 +43,7 @@ SET u.firstname = ?,
   u.lastname = ?
 WHERE u.userid = ?;
 
--- Als Mitglied möchte ich meine Telefonnummer/Alt bearbeiten, weil sie aktualisiert haben.
+-- Als Mitglied möchte ich meine Telefonnummer/Alt bearbeiten, weil sie sich aktualisiert haben.
 UPDATE users u
 SET u.phone = ?,
   u.phoneAlt = ?
@@ -69,7 +69,7 @@ SET a.country = ?,
   a.street = ?
 WHERE u.userid = ?;
 
--- Als Mitglied möchte ich eine weitere Adresse hinzufügen, um eine weiter Zustellungsadresse zur Auswahl zu haben
+-- Als Mitglied möchte ich eine weitere Adresse hinzufügen, um eine weitere Zustellungsadresse zur Auswahl zu haben.
 BEGIN TRANSACTION
 INSERT INTO addresses(country, city, zipcode, street)
   JOIN addressTypes adt ON adt.addressID = a.addressID
@@ -87,11 +87,11 @@ INSERT INTO addressesTypes (
 VALUES (0, LAST_INSERT_ID(), 1, 1);
 COMMIT;
 
--- Als Mitglied möchte ich einen Artikel bestellen, den ich mir ausgesucht habe
+-- Als Mitglied möchte ich einen Artikel bestellen, den ich mir ausgesucht habe.
 
--- Als Mitglied möchte ich einen Artikel in den Warenkorb legen, um ihn zu kaufen
+-- Als Mitglied möchte ich einen Artikel in den Warenkorb legen, um ihn zu kaufen.
 
--- Als Mitarbeiter möchte ich einen Artikel hinzufügen  
+-- Als Mitarbeiter möchte ich einen Artikel hinzufügen.
 INSERT INTO items(
     name,
     dealerID,
@@ -111,7 +111,7 @@ VALUES (
     now()
   );
 
--- Als Mitarbeiter möchte ich einen Dealer hinzufügen
+-- Als Mitarbeiter möchte ich einen Dealer hinzufügen.
 INSERT INTO dealers(addressID, name)
 VALUES (?, ?);
 
@@ -119,11 +119,11 @@ VALUES (?, ?);
 DELETE FROM items
 WHERE items.itemID = ?;
 
--- Als Admin möchte ich eine neue Berechtigung anlegen
+-- Als Admin möchte ich eine neue Berechtigung anlegen.
 INSERT INTO permissions(name, description)
 VALUES (?, ?);
 
--- Als Admin möchte ich eine Berechtigung löschen
+-- Als Admin möchte ich eine Berechtigung löschen.
 DELETE FROM permissions
 WHERE permissions.name = ?;
 

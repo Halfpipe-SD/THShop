@@ -14,7 +14,7 @@ SELECT i.name,
   i.stock,
   i.manufacturer
 FROM items i
-WHERE i.name LIKE "%?%";
+WHERE i.name LIKE "%lampe%";
 
 -- Als Gast möchte ich mich einloggen, um eine Bestellung zu tätigen.
 SELECT u.username,
@@ -69,22 +69,20 @@ SET a.country = ?,
   a.street = ?
 WHERE u.userid = ?;
 
--- Als Mitglied möchte ich eine weitere Adresse hinzufügen, um eine weitere Zustellungsadresse zur Auswahl zu haben.
-BEGIN TRANSACTION
+-- Als Mitglied möchte ich eine weitere Adresse hinzufügen, um eine weiter Zustellungsadresse zur Auswahl zu haben
+START TRANSACTION;
+
 INSERT INTO addresses(country, city, zipcode, street)
-  JOIN addressTypes adt ON adt.addressID = a.addressID
-  JOIN users u ON u.userid = adt.userID
 VALUES ("DE", "Schlumpfhausen", "43534", "Straße 1");
--- TODO max in variable speichern
-INSERT INTO addressesTypes (
+
+INSERT INTO addressTypes (
     userID,
     addressID,
     isBillingAddress,
     isDeliveryAddress
   )
-  JOIN addresseson adt.addressID = a.addressID
-  JOIN users u ON u.userid = adt.userID
 VALUES (0, LAST_INSERT_ID(), 1, 1);
+
 COMMIT;
 
 -- Als Mitglied möchte ich einen Artikel bestellen, den ich mir ausgesucht habe.
@@ -112,7 +110,7 @@ VALUES (
   );
 
 -- Als Mitarbeiter möchte ich einen Dealer hinzufügen.
-INSERT INTO dealers(addressID, name)
+INSERT INTO dealers(addressID, description)
 VALUES (?, ?);
 
 -- Als Mitarbeiter möchte ich einen Artikel löschen (15)
@@ -127,4 +125,3 @@ VALUES (?, ?);
 DELETE FROM permissions
 WHERE permissions.name = ?;
 
---Hi =)

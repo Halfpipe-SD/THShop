@@ -1,10 +1,10 @@
 -- Als Gast möchte ich alle Artikel Items angezeigt bekommen 
-select i.name,
+SELECT i.name,
   i.description,
   i.price,
   i.stock,
   i.manufacturer
-from items i;
+FROM items i;
 
 -- felix
 -- Als Gast möchte ich nach einem bestimmten Artikel suchen
@@ -13,86 +13,86 @@ SELECT i.name,
   i.price,
   i.stock,
   i.manufacturer
-from items i
-where i.name like "%?%";
+FROM items i
+WHERE i.name LIKE "%?%";
 
 -- Als Gast möchte ich mich einloggen, um eine Bestellung zu tätigen.
-select u.username,
+SELECT u.username,
   u.passwordsalt
-from users u
-where u.username = ?;
+FROM users u
+WHERE u.username = ?;
 
 -- Als Mitglied möchte ich meine Email-Adrese bearbeiten, weil sie aktualisiert hat.
-update users u
-set u.email = ?
-where u.userid = ?;
+UPDATE users u
+SET u.email = ?
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich mein usernamen bearbeiten, weil dieser sich geändert hat.
-update users u
-set u.username = ?
-where u.userid = ?;
+UPDATE users u
+SET u.username = ?
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich mein passwort ändern, um die Sicherheit zu gewährleisten.
-update users u
-set u.passwordHash = ?
-where u.userid = ?;
+UPDATE users u
+SET u.passwordHash = ?
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich meinen Vor- und Nachnamen bearbeiten, da er sich geändert hat.
-update users u
-set u.firstname = ?,
+UPDATE users u
+SET u.firstname = ?,
   u.lastname = ?
-where u.userid = ?;
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich meine Telefonnummer/Alt bearbeiten, weil sie aktualisiert haben.
-update users u
-set u.phone = ?,
+UPDATE users u
+SET u.phone = ?,
   u.phoneAlt = ?
-where u.userid = ?;
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich mein Geschlecht bearbeiten.
-update users u
-set u.gender = ?
-where u.userid = ?;
+UPDATE users u
+SET u.gender = ?
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich meinen Geburtstag bearbeiten.
-update users u
-set u.birthday = ?
-where u.userid = ?;
+UPDATE users u
+SET u.birthday = ?
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich meine Adresse bearbeiten, weil sie sich geändert hat.
-update addresses a
-  join addressTypes adt on adt.addressID = a.addressID
-  join users u on u.userid = adt.userID
-set a.country = ?,
+UPDATE addresses a
+  JOIN addressTypes adt ON adt.addressID = a.addressID
+  JOIN users u ON u.userid = adt.userID
+SET a.country = ?,
   a.city = ?,
   a.zipcode = ?,
   a.street = ?
-where u.userid = ?;
+WHERE u.userid = ?;
 
 -- Als Mitglied möchte ich eine weitere Adresse hinzufügen, um eine weiter Zustellungsadresse zur Auswahl zu haben
-BEGIN transaction
-insert into addresses(country, city, zipcode, street)
-  join addressTypes adt on adt.addressID = a.addressID
-  join users u on u.userid = adt.userID
-values ("DE", "Schlumpfhausen", "43534", "Straße 1");
+BEGIN TRANSACTION
+INSERT INTO addresses(country, city, zipcode, street)
+  JOIN addressTypes adt ON adt.addressID = a.addressID
+  JOIN users u ON u.userid = adt.userID
+VALUES ("DE", "Schlumpfhausen", "43534", "Straße 1");
 -- TODO max in variable speichern
-insert into addressesTypes (
+INSERT INTO addressesTypes (
     userID,
     addressID,
     isBillingAddress,
     isDeliveryAddress
   )
-  join addresseson adt.addressID = a.addressID
-  join users u on u.userid = adt.userID
-values (0, , 1, 1);
-commit;
+  JOIN addresseson adt.addressID = a.addressID
+  JOIN users u ON u.userid = adt.userID
+VALUES (0, LAST_INSERT_ID(), 1, 1);
+COMMIT;
 
 -- Als Mitglied möchte ich einen Artikel bestellen, den ich mir ausgesucht habe
 
 -- Als Mitglied möchte ich einen Artikel in den Warenkorb legen, um ihn zu kaufen
 
 -- Als Mitarbeiter möchte ich einen Artikel hinzufügen  
-insert into items(
+INSERT INTO items(
     name,
     dealerID,
     description,
@@ -101,7 +101,7 @@ insert into items(
     manufacturer,
     dateAdded
   )
-values (
+VALUES (
     "Fußball 2",
     1,
     "ein weiterer ball",
@@ -112,19 +112,19 @@ values (
   );
 
 -- Als Mitarbeiter möchte ich einen Dealer hinzufügen
-insert into dealers(addressID, name)
-values (?, ?);
+INSERT INTO dealers(addressID, name)
+VALUES (?, ?);
 
 -- Als Mitarbeiter möchte ich einen Artikel löschen (15)
-delete from items
-where items.itemID = ?;
+DELETE FROM items
+WHERE items.itemID = ?;
 
 -- Als Admin möchte ich eine neue Berechtigung anlegen
-insert into permissions(name, description)
-values (?, ?);
+INSERT INTO permissions(name, description)
+VALUES (?, ?);
 
 -- Als Admin möchte ich eine Berechtigung löschen
-delete from permissions
-where permissions.name = ?;
+DELETE FROM permissions
+WHERE permissions.name = ?;
 
 --Hi =)
